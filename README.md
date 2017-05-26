@@ -2,6 +2,10 @@
 
 > Personal page
 
+## deploy
+git subtree push --prefix=www git@github.com:PavelGonzales/pavelgonzales.github.io.git master
+
+
 ## Build Setup
 
 ``` bash
