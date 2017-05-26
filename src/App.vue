@@ -21,8 +21,12 @@ export default {
     this.maxY = this.garden.clientHeight - this.movedCard.clientHeight;
 
     window.addEventListener('deviceorientation', this.handleOrientation);
+
+    document.querySelector('body').style.height = `${window.innerHeight}px`;
   },
   data: () => ({
+    document: null,
+    windowHeight: null,
     movedCard: null,
     garden: null,
     maxX: 0,
@@ -123,8 +127,11 @@ body
 body
   background-color #2A2F4A
   width 100vw
-  height 100vh
+  height 100%
   overflow hidden
+  position fixed
+  top 0
+  left 0
   &:after 
     content ''
     display block

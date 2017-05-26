@@ -69,7 +69,8 @@ returnEasing = cubic-bezier(0.445, 0.05, 0.55, 0.95)
   transform-style preserve-3d
   +width-lessthan(1024)
     width calc(100vw - 50px)
-    height calc(100vh - 50px)
+    height calc(100vh - 100px)
+    top -30px
   &:after 
     content ''
     display block
