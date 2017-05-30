@@ -1,5 +1,6 @@
 <template lang="pug">
-  transition(v-on:enter="enter"
+  transition(v-on:before-enter="beforeEnter"
+             v-on:enter="enter"
              v-on:leave="leave"
   )
     .resume
@@ -29,14 +30,17 @@ export default {
     };
   },
   methods: {
+    beforeEnter(el) {
+      TweenMax.to(el, 0, { rotationX: -180 });
+    },
     enter(el, done) {
-      TweenMax.from(el, 0.8, { rotationX: -90 });
+      TweenMax.to(el, 0.8, { rotationX: 0 });
       setTimeout(() => {
         done();
       }, 800);
     },
     leave(el, done) {
-      TweenMax.from(el, 0.8, { rotationX: 90 });
+      TweenMax.to(el, 0.8, { rotationX: 180 });
       setTimeout(() => {
         done();
       }, 800);
