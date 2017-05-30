@@ -8,9 +8,12 @@
 </template>
 
 <script>
+import { TweenMax } from 'gsap';
+
 export default {
   name: 'app',
   mounted() {
+    TweenMax.from(this.$el, 0.6, { scale: 1.5, rotationX: 90 });
     this.width = this.$el.offsetWidth;
     this.height = this.$el.offsetHeight;
 
