@@ -1,10 +1,10 @@
 <template lang="pug">
   .main(:style="rotate")
     .nav
-      .nav__arrow.up резюме
-      .nav__arrow.bottom блог
-      .nav__arrow.left портфолио
-      .nav__arrow.right контакты
+      router-link.nav__arrow.up(to="resume") резюме
+      router-link.nav__arrow.bottom(to="blog") блог
+      router-link.nav__arrow.left(to="portfolio") портфолио
+      router-link.nav__arrow.right(to="contacts") контакты
     .main__content(:style="rotate")
       h1.main__word {{ word }}
       h3.main__subtitle {{ subtitle }}
@@ -31,7 +31,7 @@ import { Power0 } from 'EasePack';
 import './../common/DrawSVGPlugin';
 
 export default {
-  name: 'hello',
+  name: 'contacts',
   props: [
     'rotate',
     'translate',

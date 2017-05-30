@@ -1,28 +1,16 @@
 <template lang="pug">
-  .main(:style="rotate")
+  .main
     .nav
       .nav__arrow.up резюме
       .nav__arrow.bottom блог
       .nav__arrow.left портфолио
       .nav__arrow.right контакты
-    .main__content(:style="rotate")
+    .main__content
       h1.main__word {{ word }}
-      h3.main__subtitle {{ subtitle }}
-    .perspective-wrap
-      .main__ticker(:style="translate") {{ ticker }}
     svg.triangle-thin-1(height="435" width="540")
       polygon(points="270,0 540,435 0,435" style="fill:transparent; stroke:rgba(255,255,255,0.17); stroke-width:1")
     svg.triangle-thin-2(width="920" height="695" viewBox="0 0 920 693")
       polygon(points="460,695 920,0 0,0" style="fill:transparent; stroke:rgba(255,255,255,0.07); stroke-width:1")
-
-    // svg.triangle-fill-1(:style="translate" height="75" width="90")
-    //   polygon(points="45,0 90,75 0,75" style="fill:#EF4F54; stroke:transparent; stroke-width:0")
-
-    // svg.quare-cyan-fill-big(:style="translate" height="80" width="80")
-    //   polygon(points="0,0 80,0 80,80 0,80" style="fill:#26E2D2; stroke:transparent; stroke-width:0")
-
-    // svg.circle-yellow-fill-big(:style="translate" height="106" width="106")
-    //   circle(cx="53" cy="53" r="53" style="fill:#F7E243; stroke:transparent; stroke-width:0")
 </template>
 
 <script>
@@ -31,20 +19,14 @@ import { Power0 } from 'EasePack';
 import './../common/DrawSVGPlugin';
 
 export default {
-  name: 'hello',
-  props: [
-    'rotate',
-    'translate',
-  ],
+  name: 'portfolio',
   mounted() {
     TweenMax.from('.triangle-thin-1 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
     TweenMax.from('.triangle-thin-2 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
   },
   data() {
     return {
-      word: 'G',
-      subtitle: 'Pavel Gonzales front-end developer',
-      ticker: 'developer',
+      word: 'portfolio',
     };
   },
 };

@@ -1,9 +1,6 @@
 <template>
-  <div id="app"
-       @mousemove="handleMouseMove"
-       @mouseenter="handleMouseEnter"
-       @mouseleave="handleMouseLeave">
-    <router-view class="movedCard" :translate="translateStyle" :rotate="rotateStyle"></router-view>
+  <div id="app">
+    <router-view></router-view>
   </div>
 </template>
 
@@ -14,18 +11,18 @@ export default {
   name: 'app',
   mounted() {
     TweenMax.from(this.$el, 0.6, { scale: 1.5, rotationX: 90 });
-    this.width = this.$el.offsetWidth;
-    this.height = this.$el.offsetHeight;
+    // this.width = this.$el.offsetWidth;
+    // this.height = this.$el.offsetHeight;
 
-    this.movedCard = document.querySelector('.movedCard');
-    this.garden = document.querySelector('#app');
+    // this.movedCard = document.querySelector('.movedCard');
+    // this.garden = document.querySelector('#app');
 
-    this.maxX = this.garden.clientWidth - this.movedCard.clientWidth;
-    this.maxY = this.garden.clientHeight - this.movedCard.clientHeight;
+    // this.maxX = this.garden.clientWidth - this.movedCard.clientWidth;
+    // this.maxY = this.garden.clientHeight - this.movedCard.clientHeight;
 
-    window.addEventListener('deviceorientation', this.handleOrientation);
+    // window.addEventListener('deviceorientation', this.handleOrientation);
 
-    document.querySelector('body').style.height = `${window.innerHeight}px`;
+    // document.querySelector('body').style.height = `${window.innerHeight}px`;
   },
   data: () => ({
     document: null,
@@ -164,16 +161,4 @@ body
   display flex
   flex-wrap wrap
   z-index 2
-    
-.acc-info
-  display none
-  position fixed 
-  top 0
-  right 0
-  background-color black
-  color #efefef
-  z-index 99999
-  width 200px
-  height 100px
-
 </style>

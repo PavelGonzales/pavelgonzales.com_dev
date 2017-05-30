@@ -1,28 +1,15 @@
 <template lang="pug">
-  .main(:style="rotate")
-    .nav
-      .nav__arrow.up резюме
-      .nav__arrow.bottom блог
-      .nav__arrow.left портфолио
-      .nav__arrow.right контакты
-    .main__content(:style="rotate")
-      h1.main__word {{ word }}
-      h3.main__subtitle {{ subtitle }}
-    .perspective-wrap
-      .main__ticker(:style="translate") {{ ticker }}
-    svg.triangle-thin-1(height="435" width="540")
-      polygon(points="270,0 540,435 0,435" style="fill:transparent; stroke:rgba(255,255,255,0.17); stroke-width:1")
-    svg.triangle-thin-2(width="920" height="695" viewBox="0 0 920 693")
-      polygon(points="460,695 920,0 0,0" style="fill:transparent; stroke:rgba(255,255,255,0.07); stroke-width:1")
-
-    // svg.triangle-fill-1(:style="translate" height="75" width="90")
-    //   polygon(points="45,0 90,75 0,75" style="fill:#EF4F54; stroke:transparent; stroke-width:0")
-
-    // svg.quare-cyan-fill-big(:style="translate" height="80" width="80")
-    //   polygon(points="0,0 80,0 80,80 0,80" style="fill:#26E2D2; stroke:transparent; stroke-width:0")
-
-    // svg.circle-yellow-fill-big(:style="translate" height="106" width="106")
-    //   circle(cx="53" cy="53" r="53" style="fill:#F7E243; stroke:transparent; stroke-width:0")
+  transition(v-on:enter="enter"
+             v-on:leave="leave"
+  )
+    .main
+      .nav
+        router-link.nav__arrow.up(to="resume") резюме
+        router-link.nav__arrow.bottom(to="blog") блог
+        router-link.nav__arrow.left(to="portfolio") портфолио
+        router-link.nav__arrow.right(to="contacts") контакты
+      .main__content
+        h1.main__word {{ word }}
 </template>
 
 <script>
@@ -31,21 +18,29 @@ import { Power0 } from 'EasePack';
 import './../common/DrawSVGPlugin';
 
 export default {
-  name: 'hello',
-  props: [
-    'rotate',
-    'translate',
-  ],
+  name: 'main',
   mounted() {
     TweenMax.from('.triangle-thin-1 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
     TweenMax.from('.triangle-thin-2 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
   },
   data() {
     return {
-      word: 'G',
-      subtitle: 'Pavel Gonzales front-end developer',
-      ticker: 'developer',
+      word: 'main',
     };
+  },
+  methods: {
+    enter(el, done) {
+      TweenMax.from(el, 0.8, { rotationX: 90 });
+      setTimeout(() => {
+        done();
+      }, 800);
+    },
+    leave(el, done) {
+      TweenMax.from(el, 0.8, { rotationX: -90 });
+      setTimeout(() => {
+        done();
+      }, 800);
+    },
   },
 };
 </script>
@@ -63,15 +58,17 @@ returnEasing = cubic-bezier(0.445, 0.05, 0.55, 0.95)
   margin auto
   background-color #2F3550
   box-shadow 0px 0px 50px #292F47
-  position relative
   display flex
   align-items center
   justify-content center
   overflow hidden
   color #fff
-  transition 1s hoverEasing
+  // transition 1s hoverEasing
   transform perspective(800px)
   transform-style preserve-3d
+  position absolute
+  top calc(50% - ((100vh - (137px*2)) / 2))
+  left calc(50% - ((100vw - (77.5px*2)) / 2))
   +width-lessthan(1024)
     width calc(100vw - 50px)
     height calc(100vh - 100px)
@@ -173,6 +170,8 @@ svg
     cursor pointer
     display inline-block
     position absolute
+    color #fff
+
     &.up
       top 0 
       left 50%
