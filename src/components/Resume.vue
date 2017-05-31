@@ -1,50 +1,21 @@
 <template lang="pug">
-  transition(v-on:before-enter="beforeEnter"
-             v-on:enter="enter"
-             v-on:leave="leave"
-  )
-    .resume
-      .nav
-        router-link.nav__arrow.up(to="/") главная
-        router-link.nav__arrow.bottom(to="blog") блог
-        router-link.nav__arrow.left(to="portfolio") портфолио
-        router-link.nav__arrow.right(to="contacts") контакты
-      .resume__content
-        h1.resume__word {{ word }}
+  .resume
+    .nav
+      router-link.nav__arrow.up(to="/") главная
+      router-link.nav__arrow.bottom(to="blog") блог
+      router-link.nav__arrow.left(to="portfolio") портфолио
+      router-link.nav__arrow.right(to="contacts") контакты
+    .resume__content
+      h1.resume__word {{ word }}
 </template>
 
 <script>
-import { TweenMax } from 'gsap';
-import { Power0 } from 'EasePack';
-import './../common/DrawSVGPlugin';
-
 export default {
   name: 'resume',
-  mounted() {
-    TweenMax.from('.triangle-thin-1 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
-    TweenMax.from('.triangle-thin-2 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
-  },
   data() {
     return {
       word: 'resume',
     };
-  },
-  methods: {
-    beforeEnter(el) {
-      TweenMax.to(el, 0, { rotationX: -180 });
-    },
-    enter(el, done) {
-      TweenMax.to(el, 0.8, { rotationX: 0 });
-      setTimeout(() => {
-        done();
-      }, 800);
-    },
-    leave(el, done) {
-      TweenMax.to(el, 0.8, { rotationX: 180 });
-      setTimeout(() => {
-        done();
-      }, 800);
-    },
   },
 };
 </script>
@@ -67,8 +38,8 @@ returnEasing = cubic-bezier(0.445, 0.05, 0.55, 0.95)
   justify-content center
   overflow hidden
   color #fff
-  // transition 1s hoverEasing
   transform perspective(800px)
+  transform rotateX(180deg)
   transform-style preserve-3d
   position absolute
   top calc(50% - ((100vh - (137px*2)) / 2))
@@ -94,12 +65,14 @@ returnEasing = cubic-bezier(0.445, 0.05, 0.55, 0.95)
     transform perspective(800px)
     transform-style preserve-3d
     transition 1s hoverEasing
+    pointer-events none
 
   &__word 
     transform translateZ(50px)
     font-size 425px
     line-height 0.8
     margin 0
+    pointer-events none
     text-shadow 0 0 50px rgba(255,255,255,0.2)
     +width-lessthan(768)
       font-size 245px
@@ -169,7 +142,7 @@ svg
   left 0
   right 0
   bottom 0
-  z-index 1
+  z-index 10
   &__arrow 
     cursor pointer
     display inline-block

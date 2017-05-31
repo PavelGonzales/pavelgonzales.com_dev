@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <transition :name="transitionName">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -10,36 +12,70 @@ import { TweenMax } from 'gsap';
 export default {
   name: 'app',
   mounted() {
-    TweenMax.from(this.$el, 0.6, { scale: 1.5, rotationX: 90 });
-    // this.width = this.$el.offsetWidth;
-    // this.height = this.$el.offsetHeight;
-
-    // this.movedCard = document.querySelector('.movedCard');
-    // this.garden = document.querySelector('#app');
-
-    // this.maxX = this.garden.clientWidth - this.movedCard.clientWidth;
-    // this.maxY = this.garden.clientHeight - this.movedCard.clientHeight;
-
-    // window.addEventListener('deviceorientation', this.handleOrientation);
-
-    // document.querySelector('body').style.height = `${window.innerHeight}px`;
+    if (this.$route.name === 'Main') {
+      TweenMax.fromTo(this.$el, 0.6, { scale: 1.5, rotationX: 90 }, { scale: 1, rotationX: 0 });
+    }
+    if (this.$route.name === 'Resume') {
+      TweenMax.fromTo(this.$el, 0.6, { scale: 1.5, rotationX: 90 }, { scale: 1, rotationX: 180 });
+    }
+    if (this.$route.name === 'Blog') {
+      TweenMax.fromTo(this.$el, 0.6, { scale: 1.5, rotationX: -90 }, { scale: 1, rotationX: -180 });
+    }
+    if (this.$route.name === 'Portfolio') {
+      TweenMax.fromTo(this.$el, 0.6, { scale: 1.5, rotationY: 90 }, { scale: 1, rotationY: 180 });
+    }
+    if (this.$route.name === 'Contacts') {
+      TweenMax.fromTo(this.$el, 0.6, { scale: 1.5, rotationY: -90 }, { scale: 1, rotationY: -180 });
+    }
   },
   data: () => ({
-    document: null,
-    windowHeight: null,
-    movedCard: null,
-    garden: null,
-    maxX: 0,
-    maxY: 0,
-    width: 0,
-    height: 0,
-    mouseX: 0,
-    mouseY: 0,
-    mouseLeaveDelay: null,
-    accelerationX: 0,
-    accelerationY: 0,
-    accelerationZ: 0,
+    transitionName: 'slide-left',
   }),
+  watch: {
+    $route(to, from) {
+      if ((to.name === 'Resume' && from.name === 'Main') ||
+          (to.name === 'Resume' && from.name === 'Blog') ||
+          (to.name === 'Resume' && from.name === 'Portfolio') ||
+          (to.name === 'Resume' && from.name === 'Contacts')) {
+        TweenMax.fromTo(this.$el, 1, { rotationY: 0, rotationX: 0 },
+                                     { rotationY: 0, rotationX: 180 });
+      }
+      if ((to.name === 'Portfolio' && from.name === 'Main') ||
+          (to.name === 'Portfolio' && from.name === 'Blog') ||
+          (to.name === 'Portfolio' && from.name === 'Resume') ||
+          (to.name === 'Portfolio' && from.name === 'Contacts')) {
+        TweenMax.fromTo(this.$el, 1, { rotationX: 0, rotationY: 0 },
+                                     { rotationX: 0, rotationY: 180 });
+      }
+      if ((to.name === 'Blog' && from.name === 'Main') ||
+          (to.name === 'Blog' && from.name === 'Resume') ||
+          (to.name === 'Blog' && from.name === 'Portfolio') ||
+          (to.name === 'Blog' && from.name === 'Contacts')) {
+        TweenMax.fromTo(this.$el, 1, { rotationY: 0, rotationX: 0 },
+                                     { rotationY: 0, rotationX: -180 });
+      }
+      if ((to.name === 'Contacts' && from.name === 'Main') ||
+          (to.name === 'Contacts' && from.name === 'Resume') ||
+          (to.name === 'Contacts' && from.name === 'Portfolio') ||
+          (to.name === 'Contacts' && from.name === 'Blog')) {
+        TweenMax.fromTo(this.$el, 1, { rotationX: 0, rotationY: 0 },
+                                     { rotationX: 0, rotationY: -180 });
+      }
+      if (to.name === 'Main' && from.name === 'Resume') {
+        TweenMax.fromTo(this.$el, 1, { rotationX: -180 }, { rotationX: 0 });
+      }
+      if (to.name === 'Main' && from.name === 'Portfolio') {
+        TweenMax.fromTo(this.$el, 1, { rotationY: -180 }, { rotationY: 0 });
+      }
+      if (to.name === 'Main' && from.name === 'Blog') {
+        TweenMax.fromTo(this.$el, 1, { rotationX: 180 }, { rotationX: 0 });
+      }
+      if (to.name === 'Main' && from.name === 'Contacts') {
+        TweenMax.fromTo(this.$el, 1, { rotationY: 180 }, { rotationY: 0 });
+      }
+      console.log('beforeRouteUpdate', to, from);
+    },
+  },
   computed: {
     mousePX() {
       return this.mouseX / this.width;

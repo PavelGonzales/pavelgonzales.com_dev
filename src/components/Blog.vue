@@ -1,29 +1,17 @@
 <template lang="pug">
-  .main(:style="rotate")
+  .main
     .nav
       router-link.nav__arrow.up(to="resume") резюме
       router-link.nav__arrow.bottom(to="/") главная
       router-link.nav__arrow.left(to="portfolio") портфолио
       router-link.nav__arrow.right(to="contacts") контакты
-    .main__content(:style="rotate")
+    .main__content
       h1.main__word {{ word }}
 </template>
 
 <script>
-import { TweenMax } from 'gsap';
-import { Power0 } from 'EasePack';
-import './../common/DrawSVGPlugin';
-
 export default {
   name: 'hello',
-  props: [
-    'rotate',
-    'translate',
-  ],
-  mounted() {
-    TweenMax.from('.triangle-thin-1 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
-    TweenMax.from('.triangle-thin-2 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
-  },
   data() {
     return {
       word: 'blog',
@@ -51,8 +39,8 @@ returnEasing = cubic-bezier(0.445, 0.05, 0.55, 0.95)
   justify-content center
   overflow hidden
   color #fff
-  transition 1s hoverEasing
   transform perspective(800px)
+  transform rotateX(-180deg)
   transform-style preserve-3d
   +width-lessthan(1024)
     width calc(100vw - 50px)
@@ -75,11 +63,13 @@ returnEasing = cubic-bezier(0.445, 0.05, 0.55, 0.95)
     transform perspective(800px)
     transform-style preserve-3d
     transition 1s hoverEasing
+    pointer-events none
 
   &__word 
     transform translateZ(50px)
     font-size 425px
     line-height 0.8
+    pointer-events none
     margin 0
     text-shadow 0 0 50px rgba(255,255,255,0.2)
     +width-lessthan(768)
@@ -150,7 +140,7 @@ svg
   left 0
   right 0
   bottom 0
-  z-index 1
+  z-index 10
   &__arrow 
     cursor pointer
     display inline-block

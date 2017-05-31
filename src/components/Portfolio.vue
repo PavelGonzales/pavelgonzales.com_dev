@@ -1,29 +1,17 @@
 <template lang="pug">
   .main
     .nav
-      .nav__arrow.up резюме
-      .nav__arrow.bottom блог
-      .nav__arrow.left портфолио
-      .nav__arrow.right контакты
+      router-link.nav__arrow.up(to="resume") резюме
+      router-link.nav__arrow.bottom(to="blog") блог
+      router-link.nav__arrow.left(to="/") главная
+      router-link.nav__arrow.right(to="contacts") контакты
     .main__content
       h1.main__word {{ word }}
-    svg.triangle-thin-1(height="435" width="540")
-      polygon(points="270,0 540,435 0,435" style="fill:transparent; stroke:rgba(255,255,255,0.17); stroke-width:1")
-    svg.triangle-thin-2(width="920" height="695" viewBox="0 0 920 693")
-      polygon(points="460,695 920,0 0,0" style="fill:transparent; stroke:rgba(255,255,255,0.07); stroke-width:1")
 </template>
 
 <script>
-import { TweenMax } from 'gsap';
-import { Power0 } from 'EasePack';
-import './../common/DrawSVGPlugin';
-
 export default {
   name: 'portfolio',
-  mounted() {
-    TweenMax.from('.triangle-thin-1 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
-    TweenMax.from('.triangle-thin-2 polygon', 3, { drawSVG: '0%', ease: Power0.easeNone });
-  },
   data() {
     return {
       word: 'portfolio',
@@ -51,8 +39,8 @@ returnEasing = cubic-bezier(0.445, 0.05, 0.55, 0.95)
   justify-content center
   overflow hidden
   color #fff
-  transition 1s hoverEasing
   transform perspective(800px)
+  transform rotateY(180deg)
   transform-style preserve-3d
   +width-lessthan(1024)
     width calc(100vw - 50px)
@@ -75,11 +63,13 @@ returnEasing = cubic-bezier(0.445, 0.05, 0.55, 0.95)
     transform perspective(800px)
     transform-style preserve-3d
     transition 1s hoverEasing
+    pointer-events none
 
   &__word 
     transform translateZ(50px)
     font-size 425px
     line-height 0.8
+    pointer-events none
     margin 0
     text-shadow 0 0 50px rgba(255,255,255,0.2)
     +width-lessthan(768)
@@ -150,11 +140,12 @@ svg
   left 0
   right 0
   bottom 0
-  z-index 1
+  z-index 10
   &__arrow 
     cursor pointer
     display inline-block
     position absolute
+    color #fff
     &.up
       top 0 
       left 50%
