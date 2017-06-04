@@ -1,45 +1,44 @@
 <template lang="pug">
   #app
-    transition(:name="transitionName")
-      .main-view
-        .nav
-          router-link.nav__arrow.up(to="resume") резюме
-          router-link.nav__arrow.left(to="portfolio") портфолио
-          router-link.nav__arrow.right(to="contacts") контакты
-          router-link.nav__arrow.bottom(to="/") главная
-        router-view.router-view
+    .main-view
+      .nav
+        router-link.nav__arrow.up(to="resume") резюме
+        router-link.nav__arrow.left(to="portfolio") портфолио
+        router-link.nav__arrow.right(to="contacts") контакты
+        router-link.nav__arrow.bottom(to="/") главная
+      router-view.router-view
 </template>
 
 <script>
-import { TweenMax } from 'gsap';
+import { TimelineMax } from 'gsap';
 
 export default {
   name: 'app',
   mounted() {
     this.mainView = document.querySelector('.main-view');
     if (this.$route.name === 'Main') {
-      TweenMax.fromTo(this.mainView, 0.6, { scale: 1.5, rotationX: 90 },
-                                          { scale: 1, rotationX: 0 });
+      this.tl.fromTo(this.mainView, 0.6, { scale: 1.5, rotationX: 90 },
+                                         { scale: 1, rotationX: 0 });
     }
     if (this.$route.name === 'Resume') {
-      TweenMax.fromTo(this.mainView, 0.6, { scale: 1.5, rotationX: 90 },
-                                          { scale: 1, rotationX: 180 });
+      this.tl.fromTo(this.mainView, 0.6, { scale: 1.5, rotationX: 90 },
+                                          { scale: 1, rotationX: 0 });
     }
     if (this.$route.name === 'Blog') {
-      TweenMax.fromTo(this.mainView, 0.6, { scale: 1.5, rotationX: -90 },
-                                          { scale: 1, rotationX: -180 });
+      this.tl.fromTo(this.mainView, 0.6, { scale: 1.5, rotationX: -90 },
+                                          { scale: 1, rotationX: 0 });
     }
     if (this.$route.name === 'Portfolio') {
-      TweenMax.fromTo(this.mainView, 0.6, { scale: 1.5, rotationY: 90 },
-                                          { scale: 1, rotationY: 180 });
+      this.tl.fromTo(this.mainView, 0.6, { scale: 1.5, rotationY: 90 },
+                                          { scale: 1, rotationY: 0 });
     }
     if (this.$route.name === 'Contacts') {
-      TweenMax.fromTo(this.mainView, 0.6, { scale: 1.5, rotationY: -90 },
-                                          { scale: 1, rotationY: -180 });
+      this.tl.fromTo(this.mainView, 0.6, { scale: 1.5, rotationY: -90 },
+                                          { scale: 1, rotationY: 0 });
     }
   },
   data: () => ({
-    transitionName: 'slide-left',
+    tl: new TimelineMax(),
   }),
   watch: {
     $route(to, from) {
@@ -47,41 +46,41 @@ export default {
           (to.name === 'Resume' && from.name === 'Blog') ||
           (to.name === 'Resume' && from.name === 'Portfolio') ||
           (to.name === 'Resume' && from.name === 'Contacts')) {
-        TweenMax.fromTo(this.mainView, 1, { rotationY: 0, rotationX: 0 },
-                                     { rotationY: 0, rotationX: 180 });
+        this.tl.fromTo(this.mainView, 1, { rotationY: 0, rotationX: -180 },
+                                         { rotationY: 0, rotationX: 0 });
       }
       if ((to.name === 'Portfolio' && from.name === 'Main') ||
           (to.name === 'Portfolio' && from.name === 'Blog') ||
           (to.name === 'Portfolio' && from.name === 'Resume') ||
           (to.name === 'Portfolio' && from.name === 'Contacts')) {
-        TweenMax.fromTo(this.mainView, 1, { rotationX: 0, rotationY: 0 },
-                                     { rotationX: 0, rotationY: 180 });
+        this.tl.fromTo(this.mainView, 1, { rotationX: 0, rotationY: -180 },
+                                         { rotationX: 0, rotationY: 0 });
       }
       if ((to.name === 'Blog' && from.name === 'Main') ||
           (to.name === 'Blog' && from.name === 'Resume') ||
           (to.name === 'Blog' && from.name === 'Portfolio') ||
           (to.name === 'Blog' && from.name === 'Contacts')) {
-        TweenMax.fromTo(this.mainView, 1, { rotationY: 0, rotationX: 0 },
-                                     { rotationY: 0, rotationX: -180 });
+        this.tl.fromTo(this.mainView, 1, { rotationY: 0, rotationX: 180 },
+                                     { rotationY: 0, rotationX: 0 });
       }
       if ((to.name === 'Contacts' && from.name === 'Main') ||
           (to.name === 'Contacts' && from.name === 'Resume') ||
           (to.name === 'Contacts' && from.name === 'Portfolio') ||
           (to.name === 'Contacts' && from.name === 'Blog')) {
-        TweenMax.fromTo(this.mainView, 1, { rotationX: 0, rotationY: 0 },
-                                     { rotationX: 0, rotationY: -180 });
+        this.tl.fromTo(this.mainView, 1, { rotationX: 0, rotationY: 180 },
+                                     { rotationX: 0, rotationY: 0 });
       }
       if (to.name === 'Main' && from.name === 'Resume') {
-        TweenMax.fromTo(this.mainView, 1, { rotationX: -180 }, { rotationX: 0 });
+        this.tl.fromTo(this.mainView, 1, { rotationX: -180 }, { rotationX: 0 });
       }
       if (to.name === 'Main' && from.name === 'Portfolio') {
-        TweenMax.fromTo(this.mainView, 1, { rotationY: -180 }, { rotationY: 0 });
+        this.tl.fromTo(this.mainView, 1, { rotationY: -180 }, { rotationY: 0 });
       }
       if (to.name === 'Main' && from.name === 'Blog') {
-        TweenMax.fromTo(this.mainView, 1, { rotationX: 180 }, { rotationX: 0 });
+        this.tl.fromTo(this.mainView, 1, { rotationX: 180 }, { rotationX: 0 });
       }
       if (to.name === 'Main' && from.name === 'Contacts') {
-        TweenMax.fromTo(this.mainView, 1, { rotationY: 180 }, { rotationY: 0 });
+        this.tl.fromTo(this.mainView, 1, { rotationY: 180 }, { rotationY: 0 });
       }
       console.log('beforeRouteUpdate', to, from);
     },
